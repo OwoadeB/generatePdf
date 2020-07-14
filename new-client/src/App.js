@@ -1,5 +1,6 @@
 import React, { Component } from "react";
 import axios from "axios";
+// import { Link, Router } from "react-router-dom";
 import { saveAs } from "file-saver";
 
 class App extends Component {
@@ -8,13 +9,18 @@ class App extends Component {
     recieptId: 0,
     price1: 0,
     price2: 0,
+    link: "",
   };
 
   handleChange = ({ target: { value, name } }) =>
     this.setState({ [name]: value });
 
   create = async () => {
-    axios.post("http://localhost:4000/create-pdf", this.state);
+    const res = await axios.post(
+      "http://localhost:4000/create-pdf",
+      this.state
+    );
+    this.setState({ link: res.data });
   };
 
   download = async () => {
@@ -53,7 +59,9 @@ class App extends Component {
           onChange={this.handleChange}
         />
         <button onClick={this.create}>create PDF</button>
-        <button onClick={this.download}>Download PDF</button>
+        <a href={this.state.link} target="_blank">
+          {this.state.link}
+        </a>
       </div>
     );
   }
