@@ -4,7 +4,6 @@ const app = express();
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const fs = require("fs");
 
 // Pdf Generator packages
 const pdf = require("html-pdf");
@@ -17,6 +16,7 @@ app.use(logger("dev"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
+const job = require("./job");
 
 // Pdf Generation POST
 app.post("/create-pdf", (req, res) => {
@@ -28,5 +28,7 @@ app.post("/create-pdf", (req, res) => {
     });
   res.send(`localhost:4000/${pdfFile}.pdf`);
 });
+
+job();
 
 app.listen(port, () => console.log(`server running on port ${port}`));
