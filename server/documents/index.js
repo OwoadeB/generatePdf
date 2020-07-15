@@ -7,127 +7,113 @@ module.exports = ({ name, price1, price2, Id }) => {
           <meta charset="utf-8">
           <title>PDF Result Template</title>
           <style>
-             .invoice-box {
-             max-width: 800px;
-             margin: auto;
-             padding: 30px;
-             border: 1px solid #eee;
-             box-shadow: 0 0 10px rgba(0, 0, 0, .15);
-             font-size: 16px;
-             line-height: 24px;
-             font-family: 'Helvetica Neue', 'Helvetica',
-             color: #555;
-             }
-             .margin-top {
-             margin-top: 50px;
-             }
-             .justify-center {
-             text-align: center;
-             }
-             .invoice-box table {
-             width: 100%;
-             line-height: inherit;
-             text-align: left;
-             }
-             .invoice-box table td {
-             padding: 5px;
-             vertical-align: top;
-             }
-             .invoice-box table tr td:nth-child(2) {
-             text-align: right;
-             }
-             .invoice-box table tr.top table td {
-             padding-bottom: 20px;
-             }
-             .invoice-box table tr.top table td.title {
-             font-size: 45px;
-             line-height: 45px;
-             color: #333;
-             }
-             .invoice-box table tr.information table td {
-             padding-bottom: 40px;
-             }
-             .invoice-box table tr.heading td {
-             background: #eee;
-             border-bottom: 1px solid #ddd;
-             font-weight: bold;
-             }
-             .invoice-box table tr.details td {
-             padding-bottom: 20px;
-             }
-             .invoice-box table tr.item td {
-             border-bottom: 1px solid #eee;
-             }
-             .invoice-box table tr.item.last td {
-             border-bottom: none;
-             }
-             .invoice-box table tr.total td:nth-child(2) {
-             border-top: 2px solid #eee;
-             font-weight: bold;
-             }
-             @media only screen and (max-width: 600px) {
-             .invoice-box table tr.top table td {
-             width: 100%;
-             display: block;
-             text-align: center;
-             }
-             .invoice-box table tr.information table td {
-             width: 100%;
-             display: block;
-             text-align: center;
-             }
-             }
+            body {
+               font-size:10.5px;
+            }
+
+            .container {
+            margin:auto;
+            padding: 10px 60px;
+            }
+            
+            .header {
+            font-weight:600;
+            text-align:center;
+            color: rgba(0,0,0,.3);
+            }
+            
+            .token {
+            display:flex;
+            flex-direction:column;
+            width: 60%;
+            padding: 20px 0px;
+            border-radius:4px;
+            text-align:center;
+            margin:auto;
+            border: 2px solid rgba(0,0,0,.2);
+            margin-bottom: 20px;
+            }
+            
+            div {
+            margin-bottom:20px;
+            color: rgba(0,0,0,.5);
+            }
+
+            .title {
+            display: block;
+            margin-bottom:12px;
+            font-weight:300;
+            color: rgba(0,0,0,.3);
+            }
           </style>
        </head>
        <body>
-          <div class="invoice-box">
-             <table cellpadding="0" cellspacing="0">
-                <tr class="top">
-                   <td colspan="2">
-                      <table>
-                         <tr>
-                            <td class="title"><img  src="https://i2.wp.com/cleverlogos.co/wp-content/uploads/2018/05/reciepthound_1.jpg?fit=800%2C600&ssl=1"
-                               style="width:100%; max-width:156px;"></td>
-                            <td>
-                               Datum: ${`${today.getDate()}. ${
-                                 today.getMonth() + 1
-                               }. ${today.getFullYear()}.`}
-                            </td>
-                         </tr>
-                      </table>
-                   </td>
-                </tr>
-                <tr class="information">
-                   <td colspan="2">
-                      <table>
-                         <tr>
-                            <td>
-                               Customer name: ${name}
-                            </td>
-                            <td>
-                               Receipt number: ${Id}
-                            </td>
-                         </tr>
-                      </table>
-                   </td>
-                </tr>
-                <tr class="heading">
-                   <td>Bought items:</td>
-                   <td>Price</td>
-                </tr>
-                <tr class="item">
-                   <td>First item:</td>
-                   <td>${price1}$</td>
-                </tr>
-                <tr class="item">
-                   <td>Second item:</td>
-                   <td>${price2}$</td>
-                </tr>
-             </table>
-             <br />
-             <h1 class="justify-center">Total price: ${
-               parseInt(price1) + parseInt(price2)
-             }$</h1>
+          <div class="container">
+            <h1 class="header">TRANSACTION SUMMARY<h1>
+            <div class="token">
+               <span>Token</span>
+               0000-1111-2222-3333-4444
+            </div>
+            <div>
+               <span class="title">Number of Units</span>
+               1
+            </div>
+            <div>
+               <span class="title">Meter Number</span>
+               54150698519
+            </div>
+            <div>
+               <span class="title">Date of Issue</span>
+               Fri, 10 Jul 2020 10:12:59
+            </div>
+            <div>
+               <span class="title">Transaction Reference</span>
+               D27DFE5A4DB82511648519
+            </div>
+            <div>
+               <span class="title">Receipt Number</span>
+               7342390
+            </div>
+            <div>
+               <span class="title">Total Amount</span>
+               ₦ 1,000
+            </div>
+            <div>
+               <span class="title">Service Charge</span>
+               ₦ 100
+            </div>
+            <div>
+               <span class="title">Cost of Electricity</span>
+               ₦ 950
+            </div>
+            <div>
+               <span class="title">VAT</span>
+               ₦ 50
+            </div>
+            <div>
+               <span class="title">Free Units</span>
+               kWh
+            </div>
+            <div>
+               <span class="title">Debt</span>
+               ₦ 0
+            </div>
+            <div>
+               <span class="title">Payment Type</span>
+               CARD
+            </div>
+            <div>
+               <span class="title">Account Name</span>
+               Boluwatife Owoade
+            </div>
+            <div>
+               <span class="title">Meter Name</span>
+               Ajisafe Samuel Oluwafemi
+            </div>
+            <div>
+               <span class="title">Address</span>
+               34 Sunday Taiwo street egbe
+            </div>
           </div>
        </body>
     </html>
