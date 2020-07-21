@@ -4,10 +4,11 @@ const app = express();
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
+const ejs = require("ejs");
 
 // Pdf Generator packages
 const pdf = require("html-pdf");
-const pdfTemplate = require("./documents");
+const pdfTemplate = require("./template");
 
 const port = process.env.PORT || 4000;
 
@@ -16,19 +17,19 @@ app.use(logger("dev"));
 app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
-const job = require("./job");
 
 // Pdf Generation POST
-app.post("/create-pdf", (req, res) => {
-  const pdfFile = Date.now();
-  pdf
-    .create(pdfTemplate(req.body), {})
-    .toFile(`./public/${pdfFile}.pdf`, (err) => {
-      if (err) res.send(Promise.reject());
+app.post("/download", (req, res) => {
+  pdf.create(pdfTemplate(req.body)).toStream((err, stream) => {
+    if (err) console.log(err);
+    res.writeHead(200, {
+      "Content-Type": "application/pdf",
+      "Content-disposition": "attachment; filename=file.pdf",
     });
-  res.send(`localhost:4000/${pdfFile}.pdf`);
+    stream.pipe(res);
+  });
 });
 
-job();
+// job();
 
 app.listen(port, () => console.log(`server running on port ${port}`));

@@ -1,4 +1,4 @@
-module.exports = ({ name, price1, price2, Id }) => {
+module.exports = ({ name }) => {
   const today = new Date();
   return `
     <!doctype html>
@@ -108,7 +108,7 @@ module.exports = ({ name, price1, price2, Id }) => {
             </div>
             <div>
                <span class="title">Meter Name</span>
-               Ajisafe Samuel Oluwafemi
+               ${name}
             </div>
             <div>
                <span class="title">Address</span>
