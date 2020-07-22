@@ -4,13 +4,12 @@ const app = express();
 const logger = require("morgan");
 const bodyParser = require("body-parser");
 const cors = require("cors");
-const fs = require("fs");
+const axios = require("axios");
+require("dotenv").config();
 
 // Pdf Generator packages
 const pdf = require("html-pdf");
-const pdfTemplate = require("./documents");
-
-const port = process.env.PORT || 4000;
+const pdfTemplate = require("./template");
 
 app.use(cors());
 app.use(logger("dev"));
@@ -18,15 +17,36 @@ app.use(express.static("public"));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 
-// Pdf Generation POST
-app.post("/create-pdf", (req, res) => {
-  const pdfFile = Date.now();
-  pdf
-    .create(pdfTemplate(req.body), {})
-    .toFile(`./public/${pdfFile}.pdf`, (err) => {
-      if (err) res.send(Promise.reject());
-    });
-  res.send(`localhost:4000/${pdfFile}.pdf`);
+app.get("/print/:id", async (req, res) => {
+  const { id } = req.params;
+  console.log(id);
+  try {
+    const transaction = await axios.get(
+      `xdev.buypower.ng/client/transaction/${id}`
+    );
+    console.log(transaction);
+    res.json(transaction);
+  } catch (error) {
+    throw new Error("unable to connect");
+  }
 });
 
-app.listen(port, () => console.log(`server running on port ${port}`));
+// Pdf Generation POST
+app.post("/download", async (req, res) => {
+  pdf.create(
+    pdfTemplate(transaction).toStream((err, stream) => {
+      if (err) console.log(err);
+      res.writeHead(200, {
+        "Content-Type": "application/pdf",
+        "Content-disposition": "attachment; filename=file.pdf",
+      });
+      stream.pipe(res);
+    })
+  );
+});
+
+// job();
+
+app.listen(process.env.PORT, () =>
+  console.log(`server running on port ${process.env.PORT}`)
+);
