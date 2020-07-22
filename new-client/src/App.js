@@ -5,22 +5,22 @@ import { saveAs } from "file-saver";
 
 class App extends Component {
   state = {
-    name: "",
-    recieptId: 0,
-    price1: 0,
-    price2: 0,
-    link: "",
+    id: "",
   };
 
   handleChange = ({ target: { value, name } }) =>
     this.setState({ [name]: value });
 
   create = async () => {
-    const res = await axios.post("http://localhost:4000/download", this.state, {
-      responseType: "blob",
-    });
-    const pdfBlob = new Blob([res.data], { type: "application/pdf" });
-    saveAs(pdfBlob, `${this.state.name}.pdf`);
+    const id = this.state.id;
+    console.log(id);
+
+    const res = await axios.get(`http://localhost:4000/print/${id}`);
+    // {
+    //   responseType: "blob",
+    // });
+    // const pdfBlob = new Blob([res.data], { type: "application/pdf" });
+    // saveAs(pdfBlob, `${this.state.name}.pdf`);
   };
 
   render() {
@@ -29,7 +29,7 @@ class App extends Component {
         <input
           type="text"
           placeholder="Name"
-          name="name"
+          name="id"
           onChange={this.handleChange}
         />
         {/* <input
